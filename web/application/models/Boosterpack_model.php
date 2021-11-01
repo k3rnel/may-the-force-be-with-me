@@ -168,30 +168,12 @@ class Boosterpack_model extends Emerald_model
         return static::transform_many(App::get_s()->from(self::CLASS_TABLE)->many());
     }
 
-    public function get_max_cost() : float
-    {
-        return $this->get_bank() + ($this->get_price() - $this->get_us);
-    }
-
-    public function get_new_bank_value(Item_model $item) : float
-    {
-        return $this->get_bank() + $this->get_price() - $this->get_us() - $item->get_price();
-    }
-
     /**
-     * @return Boosterpack_info_model
+     * @return int
      */
-    public function open(): Boosterpack_info_model
+    public function open(): int
     {
         // TODO: task 5, покупка и открытие бустерпака
-
-        $max_cost = $this->get_max_cost();
-        $boosterpack_info = Boosterpack_info_model::get_random_item($max_cost);
-        if ($boosterpack_info == null)
-            throw new Exception('No find boosterpack');
-        $this->set_bank($this->get_new_bank_value($boosterpack_info->get_item()));
-
-        return $boosterpack_info;
     }
 
     /**
@@ -204,14 +186,6 @@ class Boosterpack_model extends Emerald_model
         // TODO: task 5, покупка и открытие бустерпака
     }
 
-    public static function get_by_id(int $id): self
-    {
-        return static::transform_one(
-            App::get_s()->from(self::CLASS_TABLE)->where([
-                'id' => $id
-            ])->select()->one()
-        );
-    }
 
     /**
      * @param Boosterpack_model $data
