@@ -263,23 +263,13 @@ class User_model extends Emerald_model {
      * @param float $sum
      *
      * @return bool
-     * @throws \ShadowIgniterException|\Exception
+     * @throws \ShadowIgniterException
      */
-    public function add_money(float $sum) : bool
+    public function add_money(float $sum): bool
     {
-        try {
-            App::get_s()->start_trans()->execute();
-            $this->set_wallet_balance($this->get_wallet_balance() + $sum);
-            $this->set_wallet_total_refilled($this->get_wallet_total_refilled() + $sum);
-        } catch (Exception $ex) {
-            App::get_s()->start_trans()->execute();
+        // TODO: task 4, добавление денег
 
-            return false;
-        }
-
-        App::get_s()->commit()->execute();
-
-        return true;
+        return TRUE;
     }
 
 
@@ -354,15 +344,9 @@ class User_model extends Emerald_model {
      *
      * @return User_model
      */
-    public static function find_user_by_email(string $email) : User_model
+    public static function find_user_by_email(string $email): User_model
     {
         // TODO: task 1, аутентификация
-
-        return static::transform_one(
-            App::get_s()->from(self::CLASS_TABLE)->where([
-                'email' => $email
-            ])->select()->one()
-        );
     }
 
     /**

@@ -127,23 +127,4 @@ class Boosterpack_info_model extends Emerald_model {
 
         return self::transform_many($data);
     }
-
-    /**
-     * @throws \Exception
-     */
-    public static function get_random_item(int $max_cost) : ?Boosterpack_info_model
-    {
-        $data = self::transform_one(
-            App::get_s()->from(self::CLASS_TABLE)
-                ->join('items', [
-                    'boosterpack_info.item_id' => 'items.id'
-                ])
-                ->where('items.price <', $max_cost)
-                ->sortDesc('RAND()')
-                ->select()
-                ->one()
-        );
-
-        return $data->is_loaded() ? $data : null;
-    }
 }

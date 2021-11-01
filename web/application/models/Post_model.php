@@ -148,13 +148,10 @@ class Post_model extends Emerald_Model
 
     /**
      * @return Comment_model[]
-     * @throws \Exception
      */
     public function get_comments():array
     {
        // TODO: task 2, комментирование
-
-        return Comment_model::get_all_by_assign_id($this->get_id());
     }
 
     /**
@@ -208,15 +205,6 @@ class Post_model extends Emerald_Model
     public static function get_all():array
     {
         return static::transform_many(App::get_s()->from(self::CLASS_TABLE)->many());
-    }
-
-    public static function get_by_id(int $id) : Post_model
-    {
-        return static::transform_one(
-            App::get_s()->from(self::CLASS_TABLE)->where([
-                'id' => $id
-            ])->select()->one()
-        );
     }
 
     /**
